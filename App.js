@@ -22,20 +22,22 @@ import Quiz from './screens/Quiz'
 import NoticeBoard from './screens/NoticeBoard';
 import InstructorStudentList from './screens/InstructorStudentList';
 import QuizStats from './screens/QuizStats';
+import SplashScreen from './screens/splash';
+
 const Stack = createStackNavigator();
 const App = () => {
   return (
   <View style={{flex:1}}>
-    <StatusBar barStyle="dark-content" backgroundColor="#3C0A6B" />
+    <StatusBar barStyle="light-content" backgroundColor="#3C0A6B" />
     <NavigationContainer>     
-    <Stack.Navigator initialRouteName='Login'
+    <Stack.Navigator initialRouteName='Splash'
       screenOptions={{
         headerStyle: { backgroundColor: '#3C0A6B' },
         headerTintColor: 'white',
       }}>
       
      
-
+      <Stack.Screen name='Splash' component={SplashScreen} options={{ headerShown: false }} />
       <Stack.Screen name='Login' component={LoginPage} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name='Signup' component={Signup} options={{ headerShown: false }} />
