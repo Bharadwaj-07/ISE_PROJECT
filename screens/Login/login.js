@@ -16,7 +16,7 @@ export default function LoginPage({ navigation }) {
   const ForgotPassword = () => {
     Alert.alert("Please contact the concerned TA");
   };
- 
+
   HandleLogin = async (UserName, password) => {
     if (password != "" && UserName != "") {
       try {
@@ -38,7 +38,7 @@ export default function LoginPage({ navigation }) {
           navigation.navigate("Home", UserName);
           navigation.reset({
             index: 0,  // Index of the screen you want to navigate to (0 means it's the first screen)
-            routes: [{ name: 'Home', params: { UserName: UserName } }], // Set the Home screen as the new root
+            Routes: [{ name: 'Home', params: { UserName: UserName } }], // Set the Home screen as the new root
           });
         }
         if (!response.data.verified) {

@@ -16,11 +16,11 @@ import Logout from './logout';
 export default function App() {
   const Tab = createBottomTabNavigator();
   const Drawer = createDrawerNavigator();
-  const handleLogin=()=>{
+  const handleLogin = () => {
     navigation.navigate("Login");
     navigation.reset({
       index: 0,  // Index of the screen you want to navigate to (0 means it's the first screen)
-      routes: [{ name: 'Home', params: { UserName: UserName } }], // Set the Home screen as the new root
+      Routes: [{ name: 'Home', params: { UserName: UserName } }], // Set the Home screen as the new root
     });
   }
   const TabNavigator = () => {
@@ -120,7 +120,7 @@ export default function App() {
     <>
       <StatusBar style="light" />
       {/* <NavigationContainer> */}
-        <DrawerNavigator />
+      <DrawerNavigator />
       {/* </NavigationContainer>*/}
     </>
   );
