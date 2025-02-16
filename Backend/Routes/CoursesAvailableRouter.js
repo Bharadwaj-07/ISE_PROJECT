@@ -1,10 +1,10 @@
 const express = require('express');
-const Course = require('../models/CoursesAvailableModel')
+const Course = require('../Models/CoursesAvailableModel')
 
 const router = express.Router();
 
 const storeCourseData = async (req, res) => {
-    const { classId, instructor, subject} = req.body;
+    const { classId, instructor, subject } = req.body;
 
     try {
         const newCourse = new Course({ classId, instructor, subject });

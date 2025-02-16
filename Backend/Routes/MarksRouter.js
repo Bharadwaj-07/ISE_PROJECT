@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Marks = require('../models/MarksModel');
+const Marks = require('../Models/MarksModel');
 
 router.post('/setmarks', async (req, res) => {
     const marksList = req.body.students; // Assuming this is an array of marks objects
-    console.log("marks",marksList);
-    if ( marksList.length === 0) {
+    console.log("marks", marksList);
+    if (marksList.length === 0) {
         return res.status(400).json({ message: 'Marks list is required and should not be empty.' });
     }
 
@@ -15,7 +15,7 @@ router.post('/setmarks', async (req, res) => {
         const updatedMarks = await Promise.all(
             marksList.map(async (marks) => {
                 const { userId, classId, test1, test2, endSem } = marks;
-                console.log("User",userId, classId, test1, test2, endSem)
+                console.log("User", userId, classId, test1, test2, endSem)
                 if (!userId || !classId) {
                     throw new Error('userId and classId are required for each entry.');
                 }
@@ -39,39 +39,39 @@ router.post('/setmarks', async (req, res) => {
     }
 });
 
-router.post('/getmarks/student',async(req,res)=>{
-    const classId=req.body.course;
-    const userId=req.body.user;
-    console.log(classId,userId,"user");
-    try{
-        const marks = await Marks.findOne({ classId:classId,userId:userId });
+router.post('/getmarks/student', async (req, res) => {
+    const classId = req.body.course;
+    const userId = req.body.user;
+    console.log(classId, userId, "user");
+    try {
+        const marks = await Marks.findOne({ classId: classId, userId: userId });
         console.log(marks.test1);
-        res.status(200).json({test1:marks.test1,test2:marks.test2,endSem:marks.endSem});
+        res.status(200).json({ test1: marks.test1, test2: marks.test2, endSem: marks.endSem });
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 })
 // GET: Get all marks for a specific class
 router.post('/getmarks', async (req, res) => {
     console.log("Hello");
-    const classId  = req.body.course;
+    const classId = req.body.course;
     console.log(req.body)
-    
+
     console.log(classId)
 
 
     try {
-        const marks = await Marks.find({ classId:classId });
-        console.log(marks,"marks");
+        const marks = await Marks.find({ classId: classId });
+        console.log(marks, "marks");
         if (!marks || marks.length === 0) {
-            return res.status(200).json({ message: 'No marks found for this class',empty:true,data:[] });
+            return res.status(200).json({ message: 'No marks found for this class', empty: true, data: [] });
         }
 
         res.status(200).json({
             message: 'Marks retrieved successfully',
             data: marks,
-            empty:false,
+            empty: false,
         });
     } catch (error) {
         console.error('Error fetching marks:', error);

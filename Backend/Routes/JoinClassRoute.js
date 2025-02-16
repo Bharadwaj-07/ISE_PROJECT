@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const JoinClass = require('../models/JoinClassModel');
-const Profile = require('../models/Profile');
-const CourseModel = require('../models/Course');
-const MarksModel = require('../models/MarksModel')
+const JoinClass = require('../Models/JoinClassModel');
+const Profile = require('../Models/Profile');
+const CourseModel = require('../Models/Course');
+const MarksModel = require('../Models/MarksModel')
 router.post('/join', async (req, res) => {
     let { userId, classId, username } = req.body;
     console.log("join post router");
     console.log(req.body);
     console.log(userId);
-     userId = userId.toLowerCase();
+    userId = userId.toLowerCase();
     if (!userId || !classId || !username) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -18,37 +18,37 @@ router.post('/join', async (req, res) => {
         console.log("hello");
 
         // Create a new JoinClass instance
-        const mark=await JoinClass.findOne({userId,classId});
-        if (mark!==null) {  
+        const mark = await JoinClass.findOne({ userId, classId });
+        if (mark !== null) {
             return res.json({ message: "Already Joined", data: false });
         }
         const newJoin = new JoinClass({ userId, classId, username });
         console.log(newJoin);
-        
+
         const user = userId.toLowerCase();
 
-        const student=await Profile.findOne({uname:user});
+        const student = await Profile.findOne({ uname: user });
         console.log(student);
         console.log(student._id);
         console.log(classId);
-        const marked=await MarksModel.findOne({userId:userId});
+        const marked = await MarksModel.findOne({ userId: userId });
         console.log(marked);
-       {
-        const marks = new MarksModel({
-                    name:username,
-                    userId: user,
-                    classId: classId,
-                    test1:"-",
-                    test2:"-",
-                    endSem:"-"
-                });
-                const savedMarks=await marks.save();
-            }
-        
+        {
+            const marks = new MarksModel({
+                name: username,
+                userId: user,
+                classId: classId,
+                test1: "-",
+                test2: "-",
+                endSem: "-"
+            });
+            const savedMarks = await marks.save();
+        }
+
         // Update the students array in the Course model
         const updatedCourse = await CourseModel.findOneAndUpdate(
-            { courseCode: classId }, 
-            { $addToSet: { students: student._id } }, 
+            { courseCode: classId },
+            { $addToSet: { students: student._id } },
             { new: true }
         );
         const savedJoin = await newJoin.save();

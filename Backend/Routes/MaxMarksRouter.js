@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const MaxMarks = require("../models/MaxMarks");
+const MaxMarks = require("../Models/MaxMarks");
 
 // Set maximum marks for a course
 router.post("/setmaxmarks", async (req, res) => {
     try {
         const { classId, test1, test2, endSem } = req.body;
-        console.log(req.body,"maxMarks");
+        console.log(req.body, "maxMarks");
         const existingRecord = await MaxMarks.findOne({ classId });
 
         if (existingRecord) {
@@ -30,7 +30,7 @@ router.post("/getmaxmarks", async (req, res) => {
     try {
         const { classId } = req.body;
         const maxMarks = await MaxMarks.findOne({ classId });
-        console.log(classId,"Class");
+        console.log(classId, "Class");
         if (!maxMarks) {
             return res.status(404).json({ message: "No max marks found." });
         }

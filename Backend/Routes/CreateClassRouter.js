@@ -1,14 +1,14 @@
 const express = require('express');
-const Class = require('../models/CreateClassModel');
-const Course = require('../models/CoursesAvailableModel');
-const Admin = require('../models/Admins');
-const JoinClass = require('../models/JoinClassModel');
-const marks=require('../models/MarksModel');
+const Class = require('../Models/CreateClassModel');
+const Course = require('../Models/CoursesAvailableModel');
+const Admin = require('../Models/Admins');
+const JoinClass = require('../Models/JoinClassModel');
+const marks = require('../Models/MarksModel');
 const router = express.Router();
-const CourseModel = require('../models/Course');
+const CourseModel = require('../Models/Course');
 const crypto = require('crypto');
-const Attendance=require('../models/Attendance')
-const MaxMarks=require("../models/MaxMarks")
+const Attendance = require('../Models/Attendance')
+const MaxMarks = require("../Models/MaxMarks")
 router.post('/', async (req, res) => {
     let { className, subjectName, instructorName, userId } = req.body;
     console.log(req.body);
@@ -54,14 +54,14 @@ router.post('/', async (req, res) => {
             subject: subjectName,
             userId
         });
-        const newMaxMarks=new MaxMarks({
-            classId:uniqueCourseName,
-            test1:"-",
-            test2:"-",
-            endSem:"-"
+        const newMaxMarks = new MaxMarks({
+            classId: uniqueCourseName,
+            test1: "-",
+            test2: "-",
+            endSem: "-"
         })
         const savedCourse = await newCourse.save();
-        const saveMaxMarks=await newMaxMarks.save();
+        const saveMaxMarks = await newMaxMarks.save();
         // Generate the last 6 dates
         const today = new Date();
         const lastSixDates = Array.from({ length: 6 }, (_, i) => {
@@ -99,11 +99,11 @@ router.post('/user', async (req, res) => {
     console.log("user fetching", userId)
     try {
         const classes = await Class.find({ userId: userId });
-        console.log("Classes",classes);
+        console.log("Classes", classes);
         const joinClasses = await JoinClass.find({ userId: userId })
             .populate('classId', 'classId')
             .select('classId');
-        console.log("JoinClasses",joinClasses);
+        console.log("JoinClasses", joinClasses);
         const classIds = joinClasses.map(joinClass => joinClass.classId);
 
         console.log(classIds);
@@ -118,16 +118,16 @@ router.post('/user', async (req, res) => {
 });
 
 router.delete('/:classId/:userId/:admin/:instructor', async (req, res) => {
-    let { classId, userId, admin,instructor } = req.params;
+    let { classId, userId, admin, instructor } = req.params;
 
     let deletedClasses = null;
     let deletedCourses = null;
     let deletedUsers = null;
     let deletedUserClasses = null;
-    let deletedCourseModel=null;
+    let deletedCourseModel = null;
     try {
         console.log("deleting");
-        console.log('Params:', { classId, userId, admin ,instructor});
+        console.log('Params:', { classId, userId, admin, instructor });
 
         // Convert admin to boolean
         const isAdmin = admin === 'true';
@@ -143,11 +143,11 @@ router.delete('/:classId/:userId/:admin/:instructor', async (req, res) => {
             deletedUsers = await JoinClass.deleteMany({ classId: classId });
 
 
-            deletedCourseModel=await CourseModel.findOneAndDelete({classId:classId});
+            deletedCourseModel = await CourseModel.findOneAndDelete({ classId: classId });
 
         } else {
-            console.log(userId,classId);
-            userId=userId.toLowerCase();
+            console.log(userId, classId);
+            userId = userId.toLowerCase();
             deletedUserClasses = await JoinClass.findOneAndDelete({ userId: userId, classId: classId });
 
 

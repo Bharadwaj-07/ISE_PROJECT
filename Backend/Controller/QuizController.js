@@ -1,5 +1,5 @@
-const Quiz = require("../models/Quiz");
-const StudentResponse = require("../models/StudentResponse");
+const Quiz = require("../Models/Quiz");
+const StudentResponse = require("../Models/StudentResponse");
 
 // 📌 GET all quizzes for a specific course
 exports.getQuizzes = async (req, res) => {
@@ -62,8 +62,8 @@ exports.submitQuiz = async (req, res) => {
 exports.studentQuiz = async (req, res) => {
   console.log("enyteres studenyquiz");
   try {
-    const {  courseId,quizNumber, studentId } = req.params;
-    console.log(courseId,quizNumber, studentId);
+    const { courseId, quizNumber, studentId } = req.params;
+    console.log(courseId, quizNumber, studentId);
     // Fetch the quiz using quizNumber and courseId
     const quiz = await Quiz.findOne({ quizNumber, courseId });
     if (!quiz) return res.status(404).json({ message: "Quiz not found" });
@@ -82,13 +82,13 @@ exports.studentQuiz = async (req, res) => {
 };
 exports.QuizStats = async (req, res) => {
   console.log("enyteres studenyquiz");
-  const {  courseId,quizNumber } = req.params;
+  const { courseId, quizNumber } = req.params;
   try {
     const studentResponse = await StudentResponse.find({ quizNumber, courseId });
 
     res.json({
       data: studentResponse ? studentResponse : [],
-      
+
     });
   } catch (error) {
     res.status(500).json({ message: "Error fetching quiz", error });
