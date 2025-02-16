@@ -10,11 +10,11 @@ const JoinClass = () => {
     const [username, setUsername] = useState('');
     const [loading, setLoading] = useState(false);
 
-    
+
 
     const join = async () => {
-       const userId = await AsyncStorage.getItem('uname');
-        console.log("UserID",userId);
+        const userId = await AsyncStorage.getItem('uname');
+        console.log("UserID", userId);
         console.log("Trying to join a class");
         if (!classId || !username) {
             Alert.alert('Error', 'Please enter all fields!');
@@ -22,34 +22,36 @@ const JoinClass = () => {
         }
         console.log("Trying to join a class");
         setLoading(true);
-        let course=classId;
-        let user=userId;
-        const response = await axios.post(`http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/api/Attendance/Admin`, {
+        let course = classId;
+        let user = userId;
+        const response = await axios.post(`https://${GLOBAL_CONFIG.SYSTEM_IP}/api/Attendance/Admin`, {
             course,
             user,
         });
-        console.log("response admin",response);
-        if(!response.data.admin){
-        try {
-            console.log("not admin and Trying to join a class");
-            const response = await axios.post(`http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/joinClass/join`, {
-                classId, username, userId
-            });
-            console.log(response.data);
-            if(!response.data.data){
-                Alert.alert('Error', 'You are already part of the class!');
+        console.log("response admin", response);
+        if (!response.data.admin) {
+            try {
+                console.log("not admin and Trying to join a class");
+                const response = await axios.post(`https://${GLOBAL_CONFIG.SYSTEM_IP}/joinClass/join`, {
+                    classId, username, userId
+                });
+                console.log(response.data);
+                if (!response.data.data) {
+                    Alert.alert('Error', 'You are already part of the class!');
+                    setClassId('');
+                    setUsername('');
+                    return;
+                }
+                Alert.alert('Success', 'You have successfully joined the class!');
                 setClassId('');
                 setUsername('');
-            return;  }
-            Alert.alert('Success', 'You have successfully joined the class!');
-            setClassId('');
-            setUsername('');
-        } catch (error) {
-            Alert.alert('Error', 'Unable to join the class. Please try again.');
-        } finally {
-            setLoading(false);
-        }}
-        else{
+            } catch (error) {
+                Alert.alert('Error', 'Unable to join the class. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        }
+        else {
             Alert.alert(`You are admin of this course ${classId}`);
             setClassId('');
             setUsername('');
@@ -90,9 +92,9 @@ const JoinClass = () => {
             </View>
 
 
-           <TouchableOpacity style={styles.button} onPress={join}>
-                   <Text style={styles.buttonText}>Join</Text>
-                 </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={join}>
+                <Text style={styles.buttonText}>Join</Text>
+            </TouchableOpacity>
         </View>
 
     );

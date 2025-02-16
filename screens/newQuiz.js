@@ -50,7 +50,7 @@ export default function QuizCreator({ navigation, route }) {
   const deleteQuestion = (qIndex) => {
     setQuestions(questions.filter((_, index) => index !== qIndex));
   };
-  
+
   // Submit the quiz to the server
   const submitQuiz = async () => {
     // Validation: Check if any question or answer is empty
@@ -69,7 +69,7 @@ export default function QuizCreator({ navigation, route }) {
 
       const payload = { courseId, quizNumber, questions: updatedQuestions };
 
-      const response = await axios.post(`http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/quiz`, payload);
+      const response = await axios.post(`https://${GLOBAL_CONFIG.SYSTEM_IP}/quiz`, payload);
 
       if (response.status === 201 || response.status === 200) {
         Alert.alert("Success", `Quiz ${quizNumber} saved successfully`);
@@ -79,7 +79,7 @@ export default function QuizCreator({ navigation, route }) {
       console.error("Error submitting quiz:", error);
       Alert.alert("Error", "Failed to save quiz. Try again.");
     }
-  };  
+  };
 
   return (
     <SafeAreaView>  <ScrollView><View style={styles.container}>

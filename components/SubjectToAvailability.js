@@ -4,20 +4,20 @@ import axios from 'axios'
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, TextInput, } from 'react-native';
 import debounce from 'lodash.debounce';
 import { GLOBAL_CONFIG } from './global_config';
-export default function SubjectToAvailability({ Name, setName, fieldName,placeholder, Color }) {
+export default function SubjectToAvailability({ Name, setName, fieldName, placeholder, Color }) {
     const handlePress = () => {
 
     }
     const [Status, setStatus] = useState("");
     const [available, setAvailable] = useState(false);
-    if(placeholder=="") {placeholder=fieldName;} 
+    if (placeholder == "") { placeholder = fieldName; }
     const availability = async (Name) => {
 
         try {
             // Sending a POST request to check username availability
             setAvailable(false);
 
-            const response = await axios.post(`http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/api/Users/check`, { Name, fieldName });
+            const response = await axios.post(`https://${GLOBAL_CONFIG.SYSTEM_IP}/api/Users/check`, { Name, fieldName });
 
             // Log the full response for debugging (optional)
 
@@ -25,7 +25,7 @@ export default function SubjectToAvailability({ Name, setName, fieldName,placeho
             // Handle response based on the data received
             if (response.data.available) {
                 setAvailable(true);
-                 setStatus("");;
+                setStatus("");;
 
             } else {
                 setStatus(`${fieldName} already exists`);

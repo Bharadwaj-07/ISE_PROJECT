@@ -20,7 +20,7 @@ const maxMarksRoutes = require('./Routes/MaxMarksRouter');
 
 // Middleware
 App.use(cors({
-  origin: 'http://localhost:8081',
+  origin: 'https://localhost:8081',
   credentials: true,
 }));
 
@@ -66,5 +66,5 @@ App.use('/details', DetailsRoutes);
 
 const PORT = process.env.PORT || 5000;
 App.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on https://localhost:${PORT}`);
 });

@@ -14,14 +14,14 @@ export default function Mark({ navigation, route }) {
   const getStudents = async () => {
     try {
       const response = await axios.get(
-        `http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/api/Attendance/attendance`,
+        `https://${GLOBAL_CONFIG.SYSTEM_IP}/api/Attendance/attendance`,
         { params: { course, date } }
       );
       console.log("Students:", response.data);
-      if(response.status===300)
+      if (response.status === 300)
         return;
       setPrevAttendance(response.data);
-  
+
       // Update selectedStudents by adding previous attendance data
       setSelectedStudents((prevSelected) => {
         const updatedSelected = { ...prevSelected };
@@ -30,12 +30,12 @@ export default function Mark({ navigation, route }) {
         });
         return updatedSelected;
       });
-  
+
     } catch (e) {
       console.error(e);
     }
   };
-  
+
   useEffect(() => {
     getStudents();
   }, []);
@@ -43,7 +43,7 @@ export default function Mark({ navigation, route }) {
     const getStudent = async () => {
       try {
         const response = await axios.post(
-          `http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/api/Attendance/students`,
+          `https://${GLOBAL_CONFIG.SYSTEM_IP}/api/Attendance/students`,
           { course }
         );
         setStudents(response.data);
@@ -70,7 +70,7 @@ export default function Mark({ navigation, route }) {
     try {
       console.log("posting", attendanceList);
       await axios.post(
-        `http://${GLOBAL_CONFIG.SYSTEM_IP}:${GLOBAL_CONFIG.PORT}/api/Attendance/attendance`,
+        `https://${GLOBAL_CONFIG.SYSTEM_IP}/api/Attendance/attendance`,
         {
           date: formattedDate,
           course,
