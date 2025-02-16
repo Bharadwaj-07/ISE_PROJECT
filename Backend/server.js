@@ -20,7 +20,7 @@ const maxMarksRoutes = require('./Routes/MaxMarksRouter');
 
 // Middleware
 App.use(cors({
-  origin: 'https://localhost:8081',
+  origin: 'http://localhost:8081',
   credentials: true,
 }));
 
