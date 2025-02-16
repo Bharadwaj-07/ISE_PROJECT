@@ -1,5 +1,5 @@
 const express = require("express")
-const { getDates,getUsers,getAttendance,SetAttendance,checkAdmin,UserAttendance} = require('../Controller/AttendanceController');
+const { getDates, getUsers, getAttendance, SetAttendance, checkAdmin, UserAttendance } = require('../Controller/AttendanceController');
 const { set } = require("mongoose");
 const router = express.Router()
 function AuthenticateToken(req, res, next) {
@@ -23,7 +23,7 @@ jwt = require('jsonwebtoken');
 router.post("/dates", getDates);
 router.post("/students", getUsers);
 router.get("/attendance", getAttendance);
-router.post("/Admin",checkAdmin);
-router.post("/attendance",SetAttendance);
-router.post("/UserAttendance",UserAttendance);
+router.post("/Admin", checkAdmin);
+router.post("/attendance", SetAttendance);
+router.post("/UserAttendance", UserAttendance);
 module.exports = router
