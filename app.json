@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Edu Sync",
-    "slug": "Edu Sync",
+    "name": "Edu-Sync",
+    "slug": "LMS",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app_icon_final.png",

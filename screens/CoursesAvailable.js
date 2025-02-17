@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import React, { useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import CourseDetailsToJoin from '../components/CourseDetailsToJoin';
@@ -11,7 +10,8 @@ const CoursesAvailable = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchCourses = () => {
+    const fetchCourses = useCallback(() => {
+        setLoading(true);
         axios.get(`https://${GLOBAL_CONFIG.SYSTEM_IP}/coursesAvailable`)
             .then((response) => {
                 setCourses(response.data);
@@ -21,18 +21,13 @@ const CoursesAvailable = () => {
                 setError(err.message);
                 setLoading(false);
             });
+    }, []);
 
-    };
-
-    useFocusEffect(
-        React.useCallback(() => {
-            fetchCourses();
-        }, [])
-    );
+    useFocusEffect(fetchCourses);
 
     if (loading) {
         return (
-            <View style={styles.centered}>
+            <View style={styles.message}>
                 <ActivityIndicator size="large" color="#007BFF" />
                 <Text style={styles.loadingText}>Loading courses...</Text>
             </View>
@@ -41,7 +36,7 @@ const CoursesAvailable = () => {
 
     if (error) {
         return (
-            <View style={styles.centered}>
+            <View style={styles.message}>
                 <Text style={styles.errorText}>Error loading courses: {error}</Text>
             </View>
         );
@@ -50,7 +45,7 @@ const CoursesAvailable = () => {
     return (
         <View style={styles.container}>
             {courses.length > 0 ? (
-                <ScrollView>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {courses.map((course) => (
                         <CourseDetailsToJoin
                             key={course._id}
@@ -67,7 +62,6 @@ const CoursesAvailable = () => {
             )}
         </View>
     );
-
 };
 
 export default CoursesAvailable;
@@ -78,12 +72,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F9FA',
     },
     scrollContainer: {
-        flexGrow: 1,
         paddingVertical: 20,
         paddingHorizontal: 16,
     },
     noCoursesContainer: {
-        flex: 1,  // Ensure full height
+        flex: 1,  
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -91,5 +84,15 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#6C757D',
         textAlign: 'center',
+    },
+    loadingText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: '#007BFF',
+    },
+    errorText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: 'red',
     },
 });
