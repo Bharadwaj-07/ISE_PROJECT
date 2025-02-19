@@ -40,7 +40,7 @@ EduSync is a comprehensive learning app designed to facilitate seamless online c
 - **https://drive.google.com/drive/folders/1nEziBRtHLgEgXrLT1AA8_fcKonNNHD6P?usp=drive_link**
 
 ## For testing the features of the Applications
-- ** UserName:Yash Password : Pass
-- ** The above Profile has classes where the User is admin to one Course and student in another course.
-- ** Both have different functionalities according to their Roles.
-- ** The first time login might take some time due to the delays from the render when it is hit with first request. Subsequent actions will be good.
+-  UserName:Yash Password : Pass
+-  The above Profile has classes where the User is admin to one Course and student in another course.
+-  Both have different functionalities according to their Roles.
+-  The first time login might take some time due to the delays from the render when it is hit with first request. Subsequent actions will be good.
