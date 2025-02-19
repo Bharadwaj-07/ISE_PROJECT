@@ -43,3 +43,4 @@ EduSync is a comprehensive learning app designed to facilitate seamless online c
 - ** UserName:Yash Password : Pass
 - ** The above Profile has classes where the User is admin to one Course and student in another course.
 - ** Both have different functionalities according to their Roles.
+- ** The first time login might take some time due to the delays from the render when it is hit with first request. Subsequent actions will be good.
